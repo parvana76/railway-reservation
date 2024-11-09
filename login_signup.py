@@ -1,21 +1,26 @@
 #dictionary to store user credentials
-user_db={}
+user={}
+admin={"railwayadmin":"12345"}#username:password for admin
 #function to sign up
 def sign_up():
     username=input("Enter a new username:").strip()
-    if username in user_db:
+    if username in user or admin :
         print('Username already taken!\nPlease try again with a different one.')
     else:
         password=input("Create a password").strip()
-        user_db[username]=password
+        user[username]=password
         print("you have successfully registered!")
 #function to sign in
 def sign_in():
     username=input("Enter username:").strip()
     password=input("Enter password:").strip()
     #to check if username exists and password matches:
-    if username in user_db and user_db[username]==password:
+    if username in user and user[username]==password:
         print("Welcome back,",username,"!")
+        #userdashboard add
+    if username in admin and admin[username]==password:
+        print("Welcome back,",username,"!")
+        #add admin dashboard
     else:
         print("Invalid username or password. Please try again.")
 #main function:
