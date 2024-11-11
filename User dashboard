@@ -59,6 +59,8 @@ if choice==1:
             time=int(input('Enter prefferred timing (1/2)')) 
             passengers=int(input('Enter no. of passengers'))
             details()
+            price()
+    print('Total price: ',Total)
        #Print bill and dictionary with all details
         else:
             print("No trains available for the selected route.")
