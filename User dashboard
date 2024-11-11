@@ -43,16 +43,8 @@ def details():
     res_id=reservations[n-1]['reservation_id']+1
     seatno=reservations[n-1]["seat_number"]+s
     fullseat=str(seatno)+'-'+str(Class)
-    price()
     T['Passenger'+str(i)].update({'reservationid':res_id,'Seat':fullseat})
     price()
-
-#Price:
-def price():
-for c in classes:
-    if c==Classes:
-        Total=c[classes]*passengers
-    
 
 #Booking
 T={}
@@ -68,7 +60,8 @@ if choice==1:
             details()
             print('Total price: ',Total+100)
             select_payment_method()
-            print('BILL:   ',T
+            print('BILL:   ',T\n'Total:',\tTotal+100)
+            print('PAYMENT SUCCESSFUL, BOOKING CONFIRMED')
        #Print bill and dictionary with all details
         else:
             print("No trains available for the selected route.")
