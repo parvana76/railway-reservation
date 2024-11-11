@@ -1,0 +1,49 @@
+trains = [ {"train_id": 1, "name": "Express A", "origin": "City A", "destination": "City B", "seats": 100,"timings":['A-B','X-Y']},
+{"train_id": 2, "name": "Express B", "origin": "City B", "destination": "City C", "seats": 150,"timings":['D-E','F-G']}]
+#basic data for reservations
+reservations = [{"reservation_id": 1, "train_id": 1, "passenger_name": "Sanjana", "seat_number": 1,'PNR details':[1,Confirmed]},
+{"reservation_id": 2, "train_id": 2, "passenger_name": "Rakshan", "seat_number": 2,'PNR details':[2,'Waitlisted']}]
+
+#User menu
+choice=int(input('Enter your choice: (1,2,3)\n1.Book a train\n2.Check PNR status\n3.Cancel ticket\n4.Exit\n'))
+
+#function for details of passengers
+def details():
+    for i in range(1,passengers+1):
+        name=str(input('Enter full name'))
+        age=int(input('Enter age'))
+        sex=str(input('Enter sex (M/F)'))
+        if sex=="F":
+            LOZ=str(input('Would you like to book a seat in the ladies only zone? (Y/N)'))
+            if LOZ=='Y':
+                zone='Ladies only zone'
+            else:
+                zone='Normal'
+        Class=int(input('''Enter preferred class:
+        1) 1A     Price: Rs.1940
+        2) SL     Price: Rs.665
+        3) CC     Price: Rs.315
+        4) 2S     Price: Rs.180'''))
+        T['Passenger'+str(i)]={'Name':name,'Age':age,'Sex':sex,'Zone':zone,'Class':Class}
+    pno=int(input('Enter phone number'))
+    e_id=str(input('Enter email id'))
+
+#Booking
+if choice==1:
+    T={}
+    n=len(reservations)
+    origin=str(input('Enter origin'))
+    destination=str(input('Enter Destination'))
+    for train in trains:
+        if train["origin"]==origin and train["destination"]==destination:
+            print('Timings available for train',train["name"],':',train["timings"])
+            time=int(input('Enter prefferred timing (1/2)')) 
+            passengers=int(input('Enter no. of passengers'))
+            details()
+            T['Passenger'+str(i)].update({'Phone':pno,'Email':e_id}) 
+       #Here add payment integration
+            PNR=reservations[n-1]['PNR details'][0]+1     #Allotting PNR no.
+
+
+
+
