@@ -1,11 +1,14 @@
 trains = [ {"train_id": 1, "name": "Express A", "origin": "City A", "destination": "City B", "seats": 100,"timings":['A-B','X-Y']},
 {"train_id": 2, "name": "Express B", "origin": "City B", "destination": "City C", "seats": 150,"timings":['D-E','F-G']}]
+
 #basic data for reservations
 reservations = [{"reservation_id": 1, "train_id": 1, "passenger_name": "Sanjana", "seat_number": 1,'PNR status':['Confirmed']},
 {"reservation_id": 2, "train_id": 2, "passenger_name": "Rakshan", "seat_number": 2,'PNR status':['Waitlisted']}]
 
+#Class-price data
+classes={1:1940,2:665,3:315,4:180}
 #User menu
-choice=int(input('Enter your choice: (1,2,3)\n1.Book a train\n2.Check PNR status\n3.Cancel ticket\n4.Exit\n'))
+choice=int(input('Enter your choice: (1,2,3,4)\n1.Book a train\n2.Check PNR status\n3.Cancel ticket\n4.Exit\n'))
 
 #function for details of passengers
 def details():
@@ -30,8 +33,19 @@ def details():
     T['Passenger'+str(i)].update({'Phone':pno,'Email':e_id}) 
        #Here add payment integration
     res_id=reservations[n-1]['reservation_id']+1
-    T['Passenger'+str(i)].update({'reservationid':res_id})
+    seatno=reservations[n-1]["seat_number"]+s
+    fullseat=str(seatno)+'-'+Class
+    T['Passenger'+str(i)].update({'reservationid':res_id,'Seat':fullseat})
+    price()
+    print('Total price: ',Total)
     print('Booking confirmed for',name,'under reservation id',res_id)
+
+#Price:
+def price():
+for c in classes:
+    if c==Classes:
+        Total=c[classes]*passengers
+    
 
 #Booking
 T={}
@@ -70,6 +84,7 @@ elif choice==3:
 elif choice==4:
     c=str(input('Exit? (y/n)'))
     if c=='y':
+        print('Exiting....')
         exit()
     elif c=='n':
         pass
