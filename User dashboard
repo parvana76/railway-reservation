@@ -1,8 +1,8 @@
 trains = [ {"train_id": 1, "name": "Express A", "origin": "City A", "destination": "City B", "seats": 100,"timings":['A-B','X-Y']},
 {"train_id": 2, "name": "Express B", "origin": "City B", "destination": "City C", "seats": 150,"timings":['D-E','F-G']}]
 #basic data for reservations
-reservations = [{"reservation_id": 1, "train_id": 1, "passenger_name": "Sanjana", "seat_number": 1,'PNR details':[1,Confirmed]},
-{"reservation_id": 2, "train_id": 2, "passenger_name": "Rakshan", "seat_number": 2,'PNR details':[2,'Waitlisted']}]
+reservations = [{"reservation_id": 1, "train_id": 1, "passenger_name": "Sanjana", "seat_number": 1,'PNR details':['Confirmed']},
+{"reservation_id": 2, "train_id": 2, "passenger_name": "Rakshan", "seat_number": 2,'PNR details':['Waitlisted']}]
 
 #User menu
 choice=int(input('Enter your choice: (1,2,3)\n1.Book a train\n2.Check PNR status\n3.Cancel ticket\n4.Exit\n'))
@@ -42,7 +42,12 @@ if choice==1:
             details()
             T['Passenger'+str(i)].update({'Phone':pno,'Email':e_id}) 
        #Here add payment integration
-            PNR=reservations[n-1]['PNR details'][0]+1     #Allotting PNR no.
+            res_id=reservations[n-1]['reservation_id']+1
+            T['Passenger'+str(i)].update({'reservationid':res_id})
+            print('Booking confirmed for',name,'under reservation id',res_id)
+
+            
+
 
 
 
