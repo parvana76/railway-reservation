@@ -60,6 +60,7 @@ if choice==1:
             passengers=int(input('Enter no. of passengers'))
             details()
             price()
+            select_payment_method()
     print('Total price: ',Total)
        #Print bill and dictionary with all details
         else:
