@@ -1,8 +1,8 @@
 trains = [ {"train_id": 1, "name": "Express A", "origin": "City A", "destination": "City B", "seats": 100,"timings":['A-B','X-Y']},
 {"train_id": 2, "name": "Express B", "origin": "City B", "destination": "City C", "seats": 150,"timings":['D-E','F-G']}]
 #basic data for reservations
-reservations = [{"reservation_id": 1, "train_id": 1, "passenger_name": "Sanjana", "seat_number": 1,'PNR details':['Confirmed']},
-{"reservation_id": 2, "train_id": 2, "passenger_name": "Rakshan", "seat_number": 2,'PNR details':['Waitlisted']}]
+reservations = [{"reservation_id": 1, "train_id": 1, "passenger_name": "Sanjana", "seat_number": 1,'PNR status':['Confirmed']},
+{"reservation_id": 2, "train_id": 2, "passenger_name": "Rakshan", "seat_number": 2,'PNR status':['Waitlisted']}]
 
 #User menu
 choice=int(input('Enter your choice: (1,2,3)\n1.Book a train\n2.Check PNR status\n3.Cancel ticket\n4.Exit\n'))
@@ -27,10 +27,15 @@ def details():
         T['Passenger'+str(i)]={'Name':name,'Age':age,'Sex':sex,'Zone':zone,'Class':Class}
     pno=int(input('Enter phone number'))
     e_id=str(input('Enter email id'))
+    T['Passenger'+str(i)].update({'Phone':pno,'Email':e_id}) 
+       #Here add payment integration
+    res_id=reservations[n-1]['reservation_id']+1
+    T['Passenger'+str(i)].update({'reservationid':res_id})
+    print('Booking confirmed for',name,'under reservation id',res_id)
 
 #Booking
+T={}
 if choice==1:
-    T={}
     n=len(reservations)
     origin=str(input('Enter origin'))
     destination=str(input('Enter Destination'))
@@ -40,11 +45,43 @@ if choice==1:
             time=int(input('Enter prefferred timing (1/2)')) 
             passengers=int(input('Enter no. of passengers'))
             details()
-            T['Passenger'+str(i)].update({'Phone':pno,'Email':e_id}) 
-       #Here add payment integration
-            res_id=reservations[n-1]['reservation_id']+1
-            T['Passenger'+str(i)].update({'reservationid':res_id})
-            print('Booking confirmed for',name,'under reservation id',res_id)
+       #Print bill and dictionary with all details
+        else:
+            print("No trains available for the selected route.")
+
+#Checking PNR status
+elif choice==2:
+    r=int(input('Enter Reservation id'))
+    for pnr in reservations:
+        if pnr['reservation_id']==r:
+            print('PNR status:',pnr['PNR details'])
+        else:
+            print('Reservation id invalid')
+
+elif choice==3:
+    r=int(input('Enter reservation id'))
+    for pnr in reservations:
+        if pnr['reservation_id']==r:
+            pnr['PNR status']=['Cancelled']
+            print('Your ticket has been cancelled')
+        else:
+            print('Reservation id invalid')
+
+elif choice==4:
+    c=str(input('Exit? (y/n)'))
+    if c=='y':
+        exit()
+    elif c=='n':
+        pass
+else:
+    print('Invalid choice')
+        
+
+
+    
+    
+
+
 
             
 
