@@ -10,6 +10,14 @@ classes={1:1940,2:665,3:315,4:180}
 #User menu
 choice=int(input('Enter your choice: (1,2,3,4)\n1.Book a train\n2.Check PNR status\n3.Cancel ticket\n4.Exit\n'))
 
+
+#Price:
+def price():
+for c in classes:
+    if c==Classes:
+        Total=c[classes]*passengers
+
+
 #function for details of passengers
 def details():
     for i in range(1,passengers+1):
@@ -59,12 +67,12 @@ if choice==1:
             time=int(input('Enter prefferred timing (1/2)')) 
             passengers=int(input('Enter no. of passengers'))
             details()
-            price()
             select_payment_method()
     print('Total price: ',Total)
        #Print bill and dictionary with all details
         else:
             print("No trains available for the selected route.")
+
 
 #Checking PNR status
 elif choice==2:
