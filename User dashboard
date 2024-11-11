@@ -61,7 +61,7 @@ if choice==1:
             print('Total price: ',Total+100)
             select_payment_method()
             print('BILL:   ',T\n'Total:',\tTotal+100)
-            print('PAYMENT SUCCESSFUL, BOOKING CONFIRMED')
+            print('PAYMENT SUCCESSFUL, Booking confirmed for',name,'under reservation id',res_id)')
        #Print bill and dictionary with all details
         else:
             print("No trains available for the selected route.")
