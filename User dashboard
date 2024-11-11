@@ -42,7 +42,7 @@ def details():
        #Here add payment integration
     res_id=reservations[n-1]['reservation_id']+1
     seatno=reservations[n-1]["seat_number"]+s
-    fullseat=str(seatno)+'-'+Class
+    fullseat=str(seatno)+'-'+str(Class)
     T['Passenger'+str(i)].update({'reservationid':res_id,'Seat':fullseat})
     price()
     print('Total price: ',Total)
