@@ -7,83 +7,115 @@ reservations = [{"reservation_id": 1, "train_id": 1, "passenger_name": "Sanjana"
 
 #Class-price data
 classes={1:1940,2:665,3:315,4:180}
+
 #User menu
 choice=int(input('Enter your choice: (1,2,3,4)\n1.Book a train\n2.Check PNR status\n3.Cancel ticket\n4.Exit\n'))
 
-
-#Price:
-def price():
-for c in classes:
-    if c==Classes:
-        Total=c[classes]*passengers
-
-
-#function for details of passengers
-def details():
-    for i in range(1,passengers+1):
-        name=str(input('Enter full name'))
-        age=int(input('Enter age'))
-        sex=str(input('Enter sex (M/F)'))
-        if sex=="F":
-            LOZ=str(input('Would you like to book a seat in the ladies only zone? (Y/N)'))
-            if LOZ=='Y':
-                zone='Ladies only zone'
-            else:
-                zone='Normal'
-        Class=int(input('''Enter preferred class:
+#class function as global variable
+def Class1():
+    global Class
+    Class=int(input('''Enter preferred class:
         1) 1A     Price: Rs.1940
         2) SL     Price: Rs.665
         3) CC     Price: Rs.315
         4) 2S     Price: Rs.180'''))
+
+#Price
+def price():
+    global Total
+    for c in classes:
+        if c==Class:
+            Total=(int(classes[c])*passengers)
+
+#function for details of passengers
+def details():
+    global name
+    global res_id
+    for i in range(1,passengers+1):
+        name=str(input('''Enter full name
+'''))
+        age=int(input('''Enter age
+'''))
+        sex=str(input('''Enter sex (M/F)
+'''))
+        if sex.strip()=="F":
+            LOZ=str(input('''Would you like to book a seat in the ladies only zone? (Y/N)
+'''))
+            if LOZ==('Y' or 'y' or 'yes' or 'YES'):
+                zone='Ladies only zone'
+            else:
+                zone='Normal'
+        else:
+            zone='Normal'
+        Class1()
         T['Passenger'+str(i)]={'Name':name,'Age':age,'Sex':sex,'Zone':zone,'Class':Class}
-    pno=int(input('Enter phone number'))
-    e_id=str(input('Enter email id'))
+    pno=int(input('''Enter phone number
+'''))
+    e_id=str(input('''Enter email id
+'''))
     T['Passenger'+str(i)].update({'Phone':pno,'Email':e_id}) 
        #Here add payment integration
     res_id=reservations[n-1]['reservation_id']+1
-    seatno=reservations[n-1]["seat_number"]+s
+    seatno=reservations[n-1]["seat_number"]+1
     fullseat=str(seatno)+'-'+str(Class)
-    T['Passenger'+str(i)].update({'reservationid':res_id,'Seat':fullseat})
-    price()
+    price()     #kuch tho gadbad hai daya
+    tot=Total+100
+    T['Passenger'+str(i)].update({'reservationid':res_id,'Seat':fullseat,'Price':tot})
+    
+
 
 #Booking
 T={}
 if choice==1:
     n=len(reservations)
-    origin=str(input('Enter origin'))
-    destination=str(input('Enter Destination'))
+    origin=str(input('''Enter origin:
+'''))
+    destination=str(input('''Enter Destination
+'''))
     for train in trains:
-        if train["origin"]==origin and train["destination"]==destination:
+        if train["origin"]==origin.strip() and train["destination"]==destination.strip():
             print('Timings available for train',train["name"],':',train["timings"])
-            time=int(input('Enter prefferred timing (1/2)')) 
-            passengers=int(input('Enter no. of passengers'))
+            time=int(input('''Enter prefferred timing (1/2)
+''')) 
+            passengers=int(input('''Enter no. of passengers
+'''))
             details()
-            print('Total price: ',Total+100)
-            select_payment_method()
-            print('BILL:   ',T\n'Total:',\tTotal+100)
-            print('PAYMENT SUCCESSFUL, Booking confirmed for',name,'under reservation id',res_id)')
-       #Print bill and dictionary with all details
+            price()
+            tot=Total+100
+            print('Total price: ','Rs.',tot)
+            s=str(input('Proceed with payment? (Y/N)'))
+            if s==('Y' or 'y' or 'Yes' or 'YES' or 'yes'):
+                print('''               BILL:
+               Total:  Rs.{}
+               PASSENGER DETAILS:
+               {}'''.format(tot,T))
+                print('PAYMENT SUCCESSFUL, Booking confirmed for',name,'under reservation id',res_id)   #printing bill and dictionary w details
+            break
         else:
             print("No trains available for the selected route.")
 
 
 #Checking PNR status
 elif choice==2:
-    r=int(input('Enter Reservation id'))
+    r=int(input('''Enter Reservation id
+'''))
     for pnr in reservations:
         if pnr['reservation_id']==r:
-            print('PNR status:',pnr['PNR details'])
-        else:
-            print('Reservation id invalid')
+            print('PNR status:',pnr['PNR status'])
+            break
+    else:
+        print('Reservation id invalid')
 
 elif choice==3:
-    r=int(input('Enter reservation id'))
+    r=int(input('''Enter reservation id
+'''))
     for pnr in reservations:
         if pnr['reservation_id']==r:
             pnr['PNR status']=['Cancelled']
             print('Your ticket has been cancelled')
-        else:
-            print('Reservation id invalid')
+            break
+    else:
+        print('Reservation id invalid')
 
 elif choice==4:
     c=str(input('Exit? (y/n)'))
@@ -94,6 +126,7 @@ elif choice==4:
         pass
 else:
     print('Invalid choice')
+        
         
 
 
