@@ -11,6 +11,21 @@ classes={1:1940,2:665,3:315,4:180}
 #User menu
 choice=int(input('Enter your choice: (1,2,3,4)\n1.Book a train\n2.Check PNR status\n3.Cancel ticket\n4.Exit\n'))
 
+#select payment function
+def select_payment_method():
+    print("Select payment method:")
+    print("1. Credit/Debit card")
+    print("2. Net Banking")
+    print("3.UPI(Google pay, phonePe,etc.)")
+    print("4.Wallets(Paytm,etc.)")
+    print("5.EMI")
+    
+    choice = input("Enter your choice:")
+    payment_method={
+        "1":"card", "2":"netbanking","3":"upi","4":"wallet","5":"emi"}
+    return payment_method.get(choice,None)
+
+
 #class function as global variable
 def Class1():
     global Class
@@ -18,7 +33,8 @@ def Class1():
         1) 1A     Price: Rs.1940
         2) SL     Price: Rs.665
         3) CC     Price: Rs.315
-        4) 2S     Price: Rs.180'''))
+        4) 2S     Price: Rs.180
+'''))
 
 #Price
 def price():
