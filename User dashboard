@@ -101,6 +101,8 @@ if choice==1:
             print('Total price: ','Rs.',tot)
             s=str(input('Proceed with payment? (Y/N)'))
             if s==('Y' or 'y' or 'Yes' or 'YES' or 'yes'):
+                select_payment_method()
+#simulating payemnt success (In real life scenario , payment status will come from the RAZORPAY API response and will send signal)
                 print('''               BILL:
                Total:  Rs.{}
                PASSENGER DETAILS:
