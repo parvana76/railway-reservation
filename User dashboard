@@ -74,7 +74,7 @@ def details():
     res_id=reservations[n-1]['reservation_id']+1
     seatno=reservations[n-1]["seat_number"]+1
     fullseat=str(seatno)+'-'+str(Class)
-    price()     #kuch tho gadbad hai daya
+    price()     
     tot=Total+100
     T['Passenger'+str(i)].update({'reservationid':res_id,'Seat':fullseat,'Price':tot})
     
@@ -95,22 +95,26 @@ if choice==1:
 ''')) 
             passengers=int(input('''Enter no. of passengers
 '''))
-            details()
-            price()
-            tot=Total+100
-            print('Total price: ','Rs.',tot)
-            s=str(input('Proceed with payment? (Y/N)'))
-            if s==('Y' or 'y' or 'Yes' or 'YES' or 'yes'):
-                select_payment_method()
+            if passengers<=train["seats"]:    
+                details()
+                price()
+                tot=Total+100
+                print('Total price: ','Rs.',tot)
+                s=str(input('Proceed with payment? (Y/N)'))
+                if s==('Y' or 'y' or 'Yes' or 'YES' or 'yes'):
+                    select_payment_method()
 #simulating payemnt success (In real life scenario , payment status will come from the RAZORPAY API response and will send signal)
-                print('''               BILL:
+                    print('''               BILL:
                Total:  Rs.{}
                PASSENGER DETAILS:
                {}'''.format(tot,T))
-                print('PAYMENT SUCCESSFUL, Booking confirmed for',name,'under reservation id',res_id)   #printing bill and dictionary w details
+                    print('PAYMENT SUCCESSFUL, Booking confirmed for',name,'under reservation id',res_id)   #printing bill and dictionary w details
+            else:
+                print('No seats available for the selected train.')
+                
             break
-        else:
-            print("No trains available for the selected route.")
+    else:
+        print("No trains available for the selected route.")
 
 
 #Checking PNR status
@@ -144,18 +148,3 @@ elif choice==4:
         pass
 else:
     print('Invalid choice')
-        
-        
-
-
-    
-    
-
-
-
-            
-
-
-
-
-
