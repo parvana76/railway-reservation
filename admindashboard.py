@@ -48,28 +48,7 @@ def select_payment_method():
         "1":"card", "2":"netbanking","3":"upi","4":"wallet","5":"emi"}
     return payment_method.get(choice,None)
     
-#fuction to book train and initiate payment 
-def book_train():
-    view_trains()
-    try:
-        train_no=int(input("enter the train number you want to book: "))
-        if train_no not in trains:
-            print("Invalid choice!")
-            return
-        num_seats=int(input("Enter the number of seats required:"))
-        if num_seat<=0 or num_seats > trains[train_no]['seats']:
-            print("Invalid number of seats")
-            return
-        #calculating total amount 
-        total_amt=num_seats*trains[train_no]['price']*100
-        print("Total amount : ",total_amt," for ",num_seats," tickets.")
-        #ask user to select a payment method
-        payment_methods=select_payment_method()
-        
-        if not payment_methods: 
-            print("invalid payment method selection !")
-            return
-        #Create an order 
+ 
         order=client.order.create({"Amount":total_amt,"currency":"INR","payment_capture":"1","method":payment_mathods})
         print("payment Order ID:",order_id)
         print("Payment Method:", payment_methods)
@@ -86,7 +65,29 @@ except ValueError:
      print("Please enter a valid number ")
     
     
-def admin_dashboard():#main function
+def admin_dashboard():#mai#fuction to book train and initiate payment 
+def book_train():
+    view_trains()
+    #plays a role in handling tasks ,ie. 
+    try:
+        train_no=int(input("enter the train number you want to book: "))
+        if train_no not in trains:
+            print("Invalid choice!")
+            return
+        num_seats=int(input("Enter the number of seats required:"))
+        if num_seats<=0 or num_seats > trains[train_no]['seats']:
+            print("Invalid number of seats")
+            return
+        #calculating total amount 
+        total_amt=num_seats*trains[train_no]['price']*100
+        print("Total amount : ",total_amt," for ",num_seats," tickets.")
+        #ask user to select a payment method
+        payment_methods=select_payment_method()
+        
+        if not payment_methods: 
+            print("invalid payment method selection !")
+            return
+        #Create an ordern function
     print("Welcome to the Admin Dashboard")
     while True:
         print("\n--- Admin Dashboard ---")
