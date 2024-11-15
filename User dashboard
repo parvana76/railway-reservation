@@ -1,5 +1,5 @@
-trains = [ {"train_id": 1, "name": "Express A", "origin": "City A", "destination": "City B", "seats": 100,"timings":['A-B','X-Y']},
-{"train_id": 2, "name": "Express B", "origin": "City B", "destination": "City C", "seats": 150,"timings":['D-E','F-G']}]
+trains = [ {"train_id": 1, "name": "Express A", "origin": "City A", "destination": "City B", "seats": 100, "timings":['A-B','X-Y']},
+{"train_id": 2, "name": "Express B", "origin": "City B", "destination": "City C", "seats": 150, "timings":['D-E','F-G']}]
 
 #basic data for reservations
 reservations = [{"reservation_id": 1, "train_id": 1, "passenger_name": "Sanjana", "seat_number": 1,'PNR status':['Confirmed']},
@@ -109,6 +109,7 @@ if choice==1:
                PASSENGER DETAILS:
                {}'''.format(tot,T))
                     print('PAYMENT SUCCESSFUL, Booking confirmed for',name,'under reservation id',res_id)   #printing bill and dictionary w details
+                    
             else:
                 print('No seats available for the selected train.')
                 
