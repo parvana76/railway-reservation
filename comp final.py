@@ -2,8 +2,8 @@
 trains = [ {"train_id": 1, "name": "Express A", "origin": "City A", "destination": "City B", "seats": 100,"timings":['2pm-7pm','9pm-11am'],"date":"7-11-2024"},
 {"train_id": 2, "name": "Express B", "origin": "City B", "destination": "City C", "seats": 150,"timings":['8pm-7am','8am-4pm'],"date":"8-11-2024"}]
 #basic data for reservations
-reservations = [{"reservation_id": 1, "train_id": 1, "passenger_name": "Sanjana", "seat_number": 1,'PNR status':'confirmed'},
-{"reservation_id": 2, "train_id": 2, "passenger_name": "Rakshan", "seat_number": 1,'PNR status':'Waitlisted'}]
+reservations = [{"reservation_id": 1, "train_id": 1, "passenger_name": "paul", "seat_number": 1,'PNR status':'confirmed'},
+{"reservation_id": 2, "train_id": 2, "passenger_name": "jiya", "seat_number": 1,'PNR status':'Waitlisted'}]
 #basic prices per class
 classes={1:1940,2:665,3:315,4:180}
 # Admin functions
