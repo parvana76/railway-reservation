@@ -1,18 +1,23 @@
 #basic data for trains
-trains = [ {"train_id": 1, "name": "Express A", "o_d": ["City A","City B"], "seats": 100,"timings":['2pm-7pm','9pm-11am'],"days":['Mon','Tue','Fri'],"stations":["StA","stB","StC"]},
-{"train_id": 2, "name": "Express B", "o_d": ["City B","City C"], "seats": 150,"timings":['8pm-7am','8am-4pm'],"days":['Fri','Sat','Sun'],"stations":["StD","stB","StE"]}]
+trains = [ {"train_id": 1, "name": "Express A", "o_d": ["station A","station B"], "seats": 100,"timings":['2pm-7pm','9pm-11am'],"days":['Mon','Tue','Fri'],"stations":["station A","station B","station C","station D"]},
+{"train_id": 2, "name": "Express B", "o_d": ["station B","station C"], "seats": 150,"timings":['8pm-7am','8am-4pm'],"days":['Fri','Sat','Sun'],"stations":["station D","station E","station F","station G"]}]
 #basic data for reservations
-reservations = [{"reservation_id": 1, "train_id": 1, "passenger_name": "Sanjana", "seat_number": 1,'PNR status':'confirmed'},
-{"reservation_id": 2, "train_id": 2, "passenger_name": "Rakshan", "seat_number": 1,'PNR status':'Waitlisted'}]
+reservations = [{"reservation_id": 1, "train_id": 1, "passenger_name": "Sanjana", "seat_number": 1,'PNR status':'confirmed',"class":"EC"},
+                {"reservation_id": 2, "train_id": 1, "passenger_name": "Raman kk", "seat_number": 23,'PNR status':'confirmed',"class":"2A"},
+                {"reservation_id": 3, "train_id": 1, "passenger_name": "Ruhaan", "seat_number": 55,'PNR status':'waitlisted',"class":"2S"},
+                {"reservation_id": 4, "train_id": 1, "passenger_name": "Shambavi", "seat_number": 20,'PNR status':'confirmed',"class":"3A"},
+                {"reservation_id": 1, "train_id": 2, "passenger_name": "Rakshan", "seat_number": 1,'PNR status':'Waitlisted',"class":"CC"},
+                {"reservation_id": 2, "train_id": 2, "passenger_name": "Mohamed", "seat_number": 3,'PNR status':'confirmed',"class":"CC"},
+                {"reservation_id": 3, "train_id": 2, "passenger_name": "Onnikrishnan", "seat_number": 40,'PNR status':'confirmed',"class":"FC"}]
 #basic prices per class
-classes={1:1940,2:665,3:315,4:180}
+classes={'1A':1940,'EC':1930,'2A':1150,'FC':950,'3A':815,'CC':665,'SL':315,'2S':180}
 # Admin functions
 
 def view_trains():#to view trains
     print("\nTrain Schedules:")
-    print('Train ID\t|\tName\t\t|\tOrigin-Destination\t|\tSeats Available\t|\tTimings\t\t\t|\tDays of run\n')
+    print('Train ID|\tName\t\t|\tOrigin-Destination\t\t|\tSeats Available\t|\tTimings\t\t\t|\tDays of run\n')
     for train in trains:
-        print(train['train_id'],'\t\t|\t',train['name'],'\t|\t',train['o_d'],'\t|\t',train['seats'],'\t\t|\t',train['timings'],
+        print(train['train_id'],'\t|\t',train['name'],'\t|\t',train['o_d'],'\t|\t',train['seats'],'\t\t|\t',train['timings'],
               '\t|\t',train['days'],"\n",sep='')
 passengers=0
 T={}
@@ -37,16 +42,25 @@ def view_reservations():#to view reservations
     for train in trains:
             if train["train_id"]==idtrain:
                 train_name=train["name"]
+                print("Train Id:",idtrain,"\t\tTrain name:",train_name,"\n")
+                print('Reservation ID\t|\tName\t\t|\tSeat number\t|\tPNR status\t|\tClass\n')
+                break
+    else:
+        print("train not found")
     for reservation in reservations:
         if reservation["train_id"]==idtrain:
-            print('Reservation ID:',reservation['reservation_id'],'\tTrain:',train_name,
-            '\nPassenger:',reservation['passenger_name'],'\tSeat Number:',reservation['seat_number'],"\nPNR status:",reservation['PNR status'])
+            print(reservation['reservation_id'],'\t\t|\t',reservation['passenger_name'],'\t|\t',reservation['seat_number'],"\t\t|\t",reservation['PNR status'],"\t|\t",reservation["class"])
+classes={'1A':1940,'EC':1930,'2A':1150,'FC':950,'3A':815,'CC':665,'SL':315,'2S':180}
 def edit_classprice():#to edit the price
-    Class=int(input('''Enter preferred class:
-        1) 1A     Price: Rs.1940
-        2) SL     Price: Rs.665
-        3) CC     Price: Rs.315
-        4) 2S     Price: Rs.180\n'''))
+    Class=input('''Enter preferred class:
+         1A     Price: Rs.1940
+         EC     Price: Rs.1930
+         2A     Price: Rs.1150
+         FC     Price: Rs.950
+         3A     Price: Rs.815
+         CC     Price: Rs.665
+         SL     Price: Rs.315
+         2S     Price: Rs.180\n''')
     new_amt=eval(input("Enter new amount:"))
     classes[Class]=new_amt
     print("Price of seat has been successfully edited!")
@@ -252,7 +266,7 @@ while True:
                 break
             else:
                 print("Invalid choice. Please select 1, 2, or 3.")
-        else:
+        elif ch=='a':
             choice=input("Enter Your choice(1,2):\n1)Sign In\n2)exit\n")
             if choice=="1":#sign in
                 sign_in()
@@ -261,6 +275,8 @@ while True:
                 break
             else:
                 print("Invalid choice. Please select 1, 2, or 3.")
+        else:
+            print("Invalid choice. Please select 'a' or 'b'.")
 
     
        
