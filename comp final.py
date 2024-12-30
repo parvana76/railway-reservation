@@ -1,18 +1,19 @@
 #basic data for trains
-trains = [ {"train_id": 1, "name": "Express A", "origin": "City A", "destination": "City B", "seats": 100,"timings":['2pm-7pm','9pm-11am'],"date":"7-11-2024"},
-{"train_id": 2, "name": "Express B", "origin": "City B", "destination": "City C", "seats": 150,"timings":['8pm-7am','8am-4pm'],"date":"8-11-2024"}]
+trains = [ {"train_id": 1, "name": "Express A", "o_d": ["City A","City B"], "seats": 100,"timings":['2pm-7pm','9pm-11am'],"days":['Mon','Tue','Fri'],"stations":["StA","stB","StC"]},
+{"train_id": 2, "name": "Express B", "o_d": ["City B","City C"], "seats": 150,"timings":['8pm-7am','8am-4pm'],"days":['Fri','Sat','Sun'],"stations":["StD","stB","StE"]}]
 #basic data for reservations
-reservations = [{"reservation_id": 1, "train_id": 1, "passenger_name": "paul", "seat_number": 1,'PNR status':'confirmed'},
-{"reservation_id": 2, "train_id": 2, "passenger_name": "jiya", "seat_number": 1,'PNR status':'Waitlisted'}]
+reservations = [{"reservation_id": 1, "train_id": 1, "passenger_name": "Sanjana", "seat_number": 1,'PNR status':'confirmed'},
+{"reservation_id": 2, "train_id": 2, "passenger_name": "Rakshan", "seat_number": 1,'PNR status':'Waitlisted'}]
 #basic prices per class
 classes={1:1940,2:665,3:315,4:180}
 # Admin functions
+
 def view_trains():#to view trains
     print("\nTrain Schedules:")
+    print('Train ID\t|\tName\t\t|\tOrigin-Destination\t|\tSeats Available\t|\tTimings\t\t\t|\tDays of run\n')
     for train in trains:
-        print('Train ID:',train['train_id'],'\tName:',train['name'],'\nOrigin:',train['origin'],
-        '\tDestination:',train['destination'],'\nSeats Available:',train['seats'],'\nTimings:',train['timings'],'\nDate:',train['date'])
-
+        print(train['train_id'],'\t\t|\t',train['name'],'\t|\t',train['o_d'],'\t|\t',train['seats'],'\t\t|\t',train['timings'],
+              '\t|\t',train['days'],"\n",sep='')
 passengers=0
 T={}
 Class=0
@@ -23,12 +24,11 @@ def add_train():#to add trains
     print("Add a New Train:")
     train_id = len(trains) + 1
     name = input("Enter train name: ")
-    origin = input("Enter origin city: ")
-    destination = input("Enter destination city: ")
+    o_d = input("Enter origin-destination: ")
     seats = int(input("Enter number of seats: "))
     timings=input("Enter timings:")
-    date=input("Enter date:")
-    trains.append({"train_id": train_id, "name": name, "origin": origin, "destination": destination, "seats": seats,"timings":timings,"date":date})
+    days=input("Enter days of run:")
+    trains.append({"train_id": train_id, "name": name, "o_d": o_d, "seats": seats,"timings":timings,"days":days})
     print("Train has been successfully added!")
     
 def view_reservations():#to view reservations
@@ -199,7 +199,7 @@ def user_dashboard():
         elif choice==4:
             cancel()
         elif choice==5:
-            print("Exiting Admin Dashboard...")
+            print("Exiting User Dashboard...")
             break
         else:
             print("Invalid choice. Please try again.")
@@ -207,7 +207,7 @@ def user_dashboard():
 #dictionary to store user credentials
 user={'user1':'railwayuser'}
 admin={"railwayadmin":"12345"}#username:password for admin
-
+#to hide the pasword
 #function to sign up
 def sign_up():
     username=input("Enter a new username:").strip()
@@ -218,11 +218,17 @@ def sign_up():
         user_dashboard()
     else:
         print('Username already taken!\nPlease try again with a different one.')
-        
+def hide_pass(password):
+    x=''
+    for i in password:
+        x=x+"*"
+    return x
 #function to sign in
 def sign_in():
     username=input("Enter username:").strip()
     password=input("Enter password:").strip()
+    hidden_pass=hide_pass(password)
+    print("password:",hidden_pass,end="\n")
     #to check if username exists and password matches:
     if username in user and user[username]==password:
         print("Welcome back,",username,"!")
@@ -234,17 +240,27 @@ def sign_in():
         print("Invalid username or password. Please try again.")
 while True:
         print("Welcome to railway reservation System!")
-        choice=input("Enter Your choice(1,2 or 3):\n1)Sign In\n2)Sign Up\n3)exit\n")
-        if choice=="1":#sign in
-            sign_in()
-        elif choice == "2":  # Sign Up
-            sign_up()
-        elif choice == "3":  # Exit
-            print("Exiting the system...")
-            break
-        
+        ch=input("Are you an admin or user?\n(a)Admin\n(b)User\n")
+        if ch=='b':
+            choice=input("Enter Your choice(1,2 or 3):\n1)Sign In\n2)Sign Up\n3)exit\n")
+            if choice=="1":#sign in
+                sign_in()
+            elif choice == "2":  # Sign Up
+                sign_up()
+            elif choice == "3":  # Exit
+                print("Exiting the system...")
+                break
+            else:
+                print("Invalid choice. Please select 1, 2, or 3.")
         else:
-            print("Invalid choice. Please select 1, 2, or 3.")
+            choice=input("Enter Your choice(1,2):\n1)Sign In\n2)exit\n")
+            if choice=="1":#sign in
+                sign_in()
+            elif choice == "2":  # Exit
+                print("Exiting the system...")
+                break
+            else:
+                print("Invalid choice. Please select 1, 2, or 3.")
 
     
        
