@@ -124,11 +124,16 @@ def book_train():
             '''))
             if passengers<=train["seats"]:    
                 global name
+                global dis
                 global res_id
                 for i in range(1,passengers+1):
                     name=str(input('''Enter full name:'''))
                     age=int(input('''Enter age:'''))
                     sex=str(input('''Enter sex (M/F):'''))
+                    if age<=5:
+                      dis=100
+                    elif age<=12:
+                      dis=50
                     if sex.strip()=="F":
                         LOZ=str(input('''Would you like to book a seat in the ladies only zone? (Y/N)'''))
                         if LOZ==('Y' or 'y' or 'yes' or 'YES'):
@@ -157,7 +162,7 @@ def book_train():
                 seatno=reservations[n-1]["seat_number"]+1
                 fullseat=str(seatno)+'-'+str(Class)
                 T['collective details'].update({'reservationid':res_id,'Seat':fullseat,'Price':Total})
-                tot=Total+100
+                tot=(Total-(Total*(dis/100)))+100
                 print('Total price: ','Rs.',tot)
                 s=str(input('Proceed with payment? (Y/N)'))
                 if s==('Y' or 'y' or 'Yes' or 'YES' or 'yes'):
