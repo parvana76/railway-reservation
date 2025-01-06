@@ -112,6 +112,9 @@ def select_payment_method():
 
 #Booking
 def book_train(x):
+    from datetime import date
+    global td
+    td=str(date.today())
     tot=0
     Total=0
     T={}
@@ -125,11 +128,12 @@ def book_train(x):
     destination=input('Enter Destination:')
     print(train["days"])
     day=input("Enter the day you want to travel:")
-    date=input("enter the date you want to travel(in a list)")
+    date=input("enter the date you want to travel(in the form of (YYYY-MM-DD)")
+    
     print("available trains:")
     flag=1
     for train in trains:
-        if origin in train["stations"] and destination in train["stations"]and day in train["days"]:
+        if origin in train["stations"] and destination in train["stations"]and day in train["days"] and td[8:]==date[8:]:
             print(flag,"Train id:",train["train_id"],"\tName:",train["name"],'\tTimings:',train["timings"],"\tDays of run:",train["days"])
 
             flag=flag+1
