@@ -80,7 +80,7 @@ def admin_dashboard(st,edi):#main function
         print("4. Edit seat/class prices") 
         print("5. Exit")
         
-        choice = input("Enter your choice (1-4): ")
+        choice = input("Enter your choice (1-5): ")
         if choice == "1":
             view_trains()
         elif choice == "2":
