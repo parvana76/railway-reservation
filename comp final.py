@@ -160,15 +160,16 @@ def book_train(x):
                                 zone='Normal'
                         else:
                             zone='Normal'
-                        Class=input('''Enter preferred class(1A,EC,2A,3A,CC,SL,2S):
-         1A     First AC             Price: Rs.1940
-         EC     Executive Class      Price: Rs.1930
-         2A     Second AC            Price: Rs.1150
-         FC     First Class          Price: Rs.950
-         3A     Third AC             Price: Rs.815
-         CC     Chair Car            Price: Rs.665
-         SL     Sleeper              Price: Rs.315
-         2S     Second Seating       Price: Rs.180\n''')
+                        print("\n1A\tFirst AC\tPrice: Rs.",classes['1A'],
+          "\nEC\tExecutive Class\tPrice: Rs.",classes['EC'],
+                      "\n2A\tSecond AC\tPrice: Rs.",classes['2A'],
+                      "\nFC\tFirst Class\tPrice: Rs.",classes['FC'],
+                      "\n3A\tThird AC\tPrice: Rs.",classes['3A'],
+                      "\nCC\tChair Car\tPrice: Rs.",classes['CC'],
+                      "\nSL\tSleeper\tPrice: Rs.",classes['SL'],
+                      "\n2S\tSecond Seating\tPrice: Rs.",classes['2S'],"\n")
+    Class=input("Enter preferred class(1A,EC,2A,FC,3A,CC,SL,2S):")
+                    
                         for c in classes.keys():
                             if c==Class:
                                 Total=Total+classes[c]
