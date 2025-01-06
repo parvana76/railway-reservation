@@ -123,10 +123,13 @@ def book_train(x):
         print(i)
     origin=input('Enter origin:')
     destination=input('Enter Destination:')
+    print(train["days"])
+    day=input("Enter the day you want to travel:")
+    date=input("enter the date you want to travel(in a list)")
     print("available trains:")
     flag=1
     for train in trains:
-        if origin in train["stations"] and destination in train["stations"]:
+        if origin in train["stations"] and destination in train["stations"]and day in train["days"]:
             print(flag,"Train id:",train["train_id"],"\tName:",train["name"],'\tTimings:',train["timings"],"\tDays of run:",train["days"])
 
             flag=flag+1
@@ -140,9 +143,6 @@ def book_train(x):
                 print("1)",train["timings"][0],"\t2)",train["timings"][1])
                 time=int(input('Enter prefferred timing (1/2):'))
                 train_id=train["train_id"]
-                print(train["days"])
-                day=input("Enter the day you want to travel:")
-                date=input("enter the date you want to travel(in a list)")
                 passengers=int(input('Enter no. of passengers:'))
                 if passengers<=train["seats"]:
                     global name
