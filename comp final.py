@@ -1,14 +1,15 @@
 #basic data for trains
+#2days prior-cancellation isnt possible
 trains = [ {"train_id": 1, "name": "Express A", "o_d": ["station A","station B"], "seats": 100,"timings":['2pm-7pm','9pm-11am'],"days":['Mon','Tue','Fri'],"stations":["station A","station B","station C","station D"]},
 {"train_id": 2, "name": "Express B", "o_d": ["station B","station C"], "seats": 150,"timings":['8pm-7am','8am-4pm'],"days":['Fri','Sat','Sun'],"stations":["station D","station E","station F","station G"]}]
 #basic data for reservations
-reservations = [{"reservation_id": 1, "train_id": 1, "passenger_name": "Sanjana", "seat_number": 1,'PNR status':'confirmed',"class":"EC","age":17,"sex":"F","zone":"normal","phone no.":9911882277,"email id":"xyz@gmail.com"},
-                {"reservation_id": 2, "train_id": 1, "passenger_name": "Raman k", "seat_number": 23,'PNR status':'confirmed',"class":"2A","age":65,"sex":"M","zone":"normal","phone no.":8811882277,"email id":"xyqz@gmail.com"},
-                {"reservation_id": 3, "train_id": 1, "passenger_name": "Ruhaan", "seat_number": 55,'PNR status':'waitlisted',"class":"2S","age":25,"sex":"M","zone":"normal","phone no.":7211882277,"email id":"xz@gmail.com"},
-                {"reservation_id": 4, "train_id": 1, "passenger_name": "Srivalli", "seat_number": 20,'PNR status':'confirmed',"class":"3A","age":30,"sex":"F","zone":"ladies only","phone no.":7811882277,"email id":"yz@gmail.com"},
-                {"reservation_id": 5, "train_id": 2, "passenger_name": "Rakshan", "seat_number": 1,'PNR status':'Waitlisted',"class":"CC","age":30,"sex":"M","zone":"normal","phone no.":9911882333,"email id":"xyza@gmail.com"},
-                {"reservation_id": 6, "train_id": 2, "passenger_name": "Akbar", "seat_number": 3,'PNR status':'confirmed',"class":"CC","age":22,"sex":"M","zone":"normal","phone no.":9911882836,"email id":"xysz@gmail.com"},
-                {"reservation_id": 7, "train_id": 2, "passenger_name": "Mridula", "seat_number": 40,'PNR status':'confirmed',"class":"FC","age":19,"sex":"M","zone":"normal","phone no.":9914482277,"email id":"xyzk@gmail.com"}]
+reservations = [{"reservation_id": 1, "train_id": 1, "passenger_name": "Sanjana", "seat_number": 1,'PNR status':'confirmed',"class":"EC","age":17,"sex":"F","zone":"normal","phone no.":'9911882277',"email id":"xyz@gmail.com",'date':[7,1,2025]},
+                {"reservation_id": 2, "train_id": 1, "passenger_name": "Raman k", "seat_number": 23,'PNR status':'confirmed',"class":"2A","age":65,"sex":"M","zone":"normal","phone no.":'8811882277',"email id":"xyqz@gmail.com",'date':[7,1,2025]},
+                {"reservation_id": 3, "train_id": 1, "passenger_name": "Ruhaan", "seat_number": 55,'PNR status':'waitlisted',"class":"2S","age":25,"sex":"M","zone":"normal","phone no.":'7211882277',"email id":"xz@gmail.com",'date':[7,1,2025]},
+                {"reservation_id": 4, "train_id": 1, "passenger_name": "Srivalli", "seat_number": 20,'PNR status':'confirmed',"class":"3A","age":30,"sex":"F","zone":"ladies only","phone no.":'7811882277',"email id":"yz@gmail.com",'date':[8,1,2025]},
+                {"reservation_id": 5, "train_id": 2, "passenger_name": "Rakshan", "seat_number": 1,'PNR status':'Waitlisted',"class":"CC","age":30,"sex":"M","zone":"normal","phone no.":'9911882333',"email id":"xyza@gmail.com",'date':[8,1,2025]},
+                {"reservation_id": 6, "train_id": 2, "passenger_name": "mohamad", "seat_number": 3,'PNR status':'confirmed',"class":"CC","age":22,"sex":"M","zone":"normal","phone no.":'9911882836',"email id":"xysz@gmail.com",'date':[8,1,2025]},
+                {"reservation_id": 7, "train_id": 2, "passenger_name": "Mridula", "seat_number": 40,'PNR status':'confirmed',"class":"FC","age":19,"sex":"M","zone":"normal","phone no.":'9914482277',"email id":"xyzk@gmail.com",'date':[8,1,2025]}]
 #basic prices per class
 classes={'1A':1940,'EC':1930,'2A':1150,'FC':950,'3A':815,'CC':665,'SL':315,'2S':180}
 #stations
@@ -37,9 +38,6 @@ def add_train(x):#to add trains
     timings=input("Enter timings:")
     days=input("Enter days of run:")
     stations=input("Enter stations:")
-    for i in stations:
-        if i not in x:
-            x.append(i)
     trains.append({"train_id": train_id, "name": name, "o_d": o_d, "seats": seats,"timings":timings,"days":days,"stations":stations})
     print("Train has been successfully added!")
     
@@ -58,21 +56,21 @@ def view_reservations():#to view reservations
         if reservation["train_id"]==idtrain:
             print(reservation['reservation_id'],'\t\t|\t',reservation['passenger_name'],'\t|\t',reservation['seat_number'],"\t\t|\t",reservation['PNR status'],"\t|\t",reservation["class"])
 classes={'1A':1940,'EC':1930,'2A':1150,'FC':950,'3A':815,'CC':665,'SL':315,'2S':180}
-def edit_classprice():#to edit the price
-    Class=input('''Enter preferred class(1A,EC,2A,3A,CC,SL,2S):
-         1A     First AC             Price: Rs.1940
-         EC     Executive Class      Price: Rs.1930
-         2A     Second AC            Price: Rs.1150
-         FC     First Class          Price: Rs.950
-         3A     Third AC             Price: Rs.815
-         CC     Chair Car            Price: Rs.665
-         SL     Sleeper              Price: Rs.315
-         2S     Second Seating       Price: Rs.180\n''')
+def edit_classprice(edit):#to edit the price
+    print("\n1A\tFirst AC\tPrice: Rs.",edit['1A'],
+          "\nEC\tExecutive Class\tPrice: Rs.",edit['EC'],
+                      "\n2A\tSecond AC\tPrice: Rs.",edit['2A'],
+                      "\nFC\tFirst Class\tPrice: Rs.",edit['FC'],
+                      "\n3A\tThird AC\tPrice: Rs.",edit['3A'],
+                      "\nCC\tChair Car\tPrice: Rs.",edit['CC'],
+                      "\nSL\tSleeper\tPrice: Rs.",edit['SL'],
+                      "\n2S\tSecond Seating\tPrice: Rs.",edit['2S'],"\n")
+    Class=input("Enter preferred class(1A,EC,2A,FC,3A,CC,SL,2S):")
     new_amt=eval(input("Enter new amount:"))
     classes[Class]=new_amt
     print("Price of seat has been successfully edited!")
 
-def admin_dashboard(st):#main function
+def admin_dashboard(st,edi):#main function
     print("Welcome to the Admin Dashboard")
     while True:
         print("\n--- Admin Dashboard ---")
@@ -82,7 +80,7 @@ def admin_dashboard(st):#main function
         print("4. Edit seat/class prices") 
         print("5. Exit")
         
-        choice = input("Enter your choice (1-5): ")
+        choice = input("Enter your choice (1-4): ")
         if choice == "1":
             view_trains()
         elif choice == "2":
@@ -90,7 +88,7 @@ def admin_dashboard(st):#main function
         elif choice == "3":
             view_reservations()
         elif choice=="4":
-            edit_classprice()
+            edit_classprice(edi)
         elif choice == "5":
             print("Exiting Admin Dashboard...")
             break
@@ -140,9 +138,12 @@ def book_train(x):
         for train in trains:
             if train["train_id"]==id_:
                 print("1)",train["timings"][0],"\t2)",train["timings"][1])
-                time=int(input('Enter prefferred timing (1/2)'))
+                time=int(input('Enter prefferred timing (1/2):'))
                 train_id=train["train_id"]
-                passengers=int(input('Enter no. of passengers'))
+                print(train["days"])
+                day=input("Enter the day you want to travel:")
+                date=input("enter the date you want to travel(in a list)")
+                passengers=int(input('Enter no. of passengers:'))
                 if passengers<=train["seats"]:
                     global name
                     global res_id
@@ -171,8 +172,12 @@ def book_train(x):
                         for c in classes.keys():
                             if c==Class:
                                 Total=Total+classes[c]
-                        pno=int(input('''Enter phone number'''))
-                        e_id=str(input('''Enter email id'''))
+                        pno=input('''Enter phone number:''')
+                        if len(pno)<10 or len(pno)>10:
+                            print("invalid phone number.")
+                            pno=input('''Enter phone number:''')
+                            
+                        e_id=str(input('''Enter email id:'''))
                         if age<=5:
                             dis=100
                         elif age<=12:
@@ -189,11 +194,10 @@ def book_train(x):
                                         print(k,end=",")
                                         break
                         seatno=int(input("\nSelect a seat number from above:"))
-                        T={'passenger_name':name,'age':age,'sex':sex,"zone":zone,'class':Class,'reservation_id':res_id,'Seat_Number':seatno,"phone no.":pno,"email id":e_id,"train_id":id_}
+                        T={'passenger_name':name,'date':date,'age':age,'sex':sex,"zone":zone,'class':Class,'reservation_id':res_id,'Seat_Number':seatno,"phone no.":pno,"email id":e_id,"train_id":id_}
                         inter.append(T)
 
-                tot=Total-(Total*(dis/100))
-                tot=tot+100
+                tot=Total+100-dis
                 print('Total price: ','Rs.',tot)
                 s=str(input('Proceed with payment? (Y/N)'))
                 if s==('Y' or 'y' or 'Yes' or 'YES' or 'yes'):
@@ -204,6 +208,7 @@ def book_train(x):
                     for q in inter:
                         q["PNR status"]="confirmed"
                         reservations.append(q)
+                        train["seats"]-=passengers
 
                        
 def pnr_check():
@@ -220,13 +225,31 @@ def pnr_check():
 def cancel():
     t=int(input("Enter train id"))
     r=int(input("Enter reservation id"))
+    date=input("enter todays date(in a list):")
     for pnr in reservations:
         if pnr['reservation_id']==r and pnr["train_id"]==t:
-            reservations.pop(pnr)
-            print('Your ticket has been cancelled')
-            break
-        else:
-            print('Reservation id invalid')
+            if pnr['date']==date:
+                print("Cancellation not possible")
+                break
+            elif (pnr['date'][0]-date[0])<=2:
+                print("Cancellation not possible")
+                break
+            elif date[0]>pnr['date'][0]:
+                print("Cancellation not possible")
+                break
+            elif date[1]>pnr['date'][1]:
+                print("Cancellation not possible")
+                break
+            else:
+                del reservations[pnr]
+                print('Your ticket has been cancelled')
+                break
+    else:
+        print('Reservation id invalid')
+    for train in trains:
+        if train["train_id"]==t:
+            train["seats"]-=1
+    
 
 def user_dashboard(st):
     print("Welcome to the User Dashboard")
@@ -273,7 +296,7 @@ def sign_up(sta):
         print('Username already taken!\nPlease try again with a different one.')
 
 #function to sign in
-def sign_in(sta):
+def sign_in(sta,ed):
     username=input("Enter username:").strip()
     password=input("Enter password:").strip()
     hidden_pass=hide_pass(password)
@@ -284,7 +307,7 @@ def sign_in(sta):
         user_dashboard(sta)
     if username in admin and admin[username]==password:
         print("Welcome back,",username,"!")
-        admin_dashboard(sta)
+        admin_dashboard(sta,ed)
     else:
         print("Invalid username or password. Please try again.")
 while True:
@@ -293,7 +316,7 @@ while True:
         if ch=='b':
             choice=input("Enter Your choice(1,2 or 3):\n1)Sign In\n2)Sign Up\n3)exit\n")
             if choice=="1":#sign in
-                sign_in(station)
+                sign_in(station,classes)
             elif choice == "2":  # Sign Up
                 sign_up(station)
             elif choice == "3":  # Exit
@@ -304,7 +327,7 @@ while True:
         elif ch=='a':
             choice=input("Enter Your choice(1,2):\n1)Sign In\n2)exit\n")
             if choice=="1":#sign in
-                sign_in(station)
+                sign_in(station,classes)
             elif choice == "2":  # Exit
                 print("Exiting the system...")
                 break
