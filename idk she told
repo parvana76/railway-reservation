@@ -132,7 +132,7 @@ def book_train(x):
     print("available trains:")
     flag=1
     for train in trains:
-        if origin in train["stations"] and destination in train["stations"]and day in train["days"] and td[8:]==date[8:]:
+        if origin in train["stations"] and destination in train["stations"]and day in train["days"] and td[8:]!=date[8:]:
             print(flag,"Train id:",train["train_id"],"\tName:",train["name"],'\tTimings:',train["timings"],"\tDays of run:",train["days"])
 
             flag=flag+1
