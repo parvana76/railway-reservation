@@ -114,26 +114,35 @@ def select_payment_method():
 
 #Booking
 def book_train(x):
+    global req_date
+    global td
+    from datetime import date
     tot=0
     Total=0
     T={}
     dis=0
     inter=[]
     n=len(reservations)
+    td = str(date.today())
     print("List Of Stations:")
     for i in x:
         print(i)
     origin=input('Enter origin:')
     destination=input('Enter Destination:')
+    req_date=str(input('Enter date of journey in the for m (YYYY-MM-DD)'))
+    while td[-4:-6]!=req_date[-4:-6] or td[0:4]!=req_date[0:4]:
+      print('Booking can only be done within a month of date of journey')
+      req_date=str(input('Enter date of journey in the form (YYYY-MM-DD)'))
+    corr_day=str(input('Corresponding day of date in the form (ex: Sat, Sun, Mon..)')).capitalize()
     print("available trains:")
     flag=1
     for train in trains:
-        if origin in train["stations"] and destination in train["stations"]:
-            print(flag,"Train id:",train["train_id"],"\tName:",train["name"],'\tTimings:',train["timings"],"\tDays od run:",train["days"])
+        if origin in train["stations"] and destination in train["stations"] and corr_day in train["days"]:
+            print(flag,"Train id:",train["train_id"],"\tName:",train["name"],'\tTimings:',train["timings"],"\tDays on run:",train["days"])
 
             flag=flag+1
     if flag==1:
-        print("no trains available for the selected route.")
+        print("no trains available for the selected route or day.")
         return None
     else:
         id_=int(input("Enter the train id of your preferred train:"))
@@ -147,11 +156,11 @@ def book_train(x):
                     global name
                     global res_id
                     for i in range(1,passengers+1):
-                        print("passenger:",i)
+                        print("Passenger:",i)
                         name=str(input('Enter full name:'))
                         age=int(input('Enter age:'))
                         sex=str(input('Enter sex (M/F):'))
-                        if sex.strip()=="F":
+                        if sex.strip().upper()=="F":
                             LOZ=str(input('''Would you like to book a seat in the ladies only zone? (Y/N)'''))
                             if LOZ==('Y' or 'y' or 'yes' or 'YES'):
                                zone='Ladies only zone'
@@ -179,7 +188,7 @@ def book_train(x):
                             dis=50
                         #Here add payment integration
                         res_id=reservations[n-1]['reservation_id']+1
-                        print("available seats:")
+                        print("Available seats:")
                         for k in range(class_seats[Class][0],class_seats[Class][1]+1):
                             for l in reservations:
                                 if l["train_id"]==id_:
@@ -200,6 +209,11 @@ def book_train(x):
                 #simulating payemnt success (In real life scenario , payment status will come from the RAZORPAY API response and will send signal)
                     print("BILL:\nPASSENGER DETAILS:\n",inter,"\nDiscount:",dis,"\nTax:100","\nTotal:",tot)
                     print('PAYMENT SUCCESSFUL')   #printing bill
+                    print('''CANCELLATION POLICY:
+1)Can only cancel 5 days prior to day of journey without cancellation fee
+2)Cancelling ticket in less than 5 days before day of journey will charge a cancellation fee accordingly'''
+                    
+                    bd = str(date.today())     #Since inputting date from user could be unreliable we use inbuilt module
                     for q in inter:
                         q["PNR status"]="confirmed"
                         reservations.append(q)
@@ -219,13 +233,32 @@ def pnr_check():
 def cancel():
     t=int(input("Enter train id"))
     r=int(input("Enter reservation id"))
-    for pnr in reservations:
-        if pnr['reservation_id']==r and pnr["train_id"]==t:
-            reservations.pop(pnr)
-            print('Your ticket has been cancelled')
-            break
+    if int(bd[8:])>int(req_date[8:]):
+        diff=int(bd[8:])-int(req_date[8:])
+    else:
+        diff=int(req_date[8:])-int(bd[8:])
+    if diff>5:
+        for pnr in reservations:
+            if pnr['reservation_id']==r and pnr["train_id"]==t:
+                del pnr
+                print('Your ticket has been cancelled')
+                break
+            else:
+                print('Reservation id invalid')
+    else:
+        print('Cancellation fee of Rs.300')
+        o=input('Are you sure you want to proceed with cancellation? (Y/N)')
+        if o==Y:
+            select_payment_method()
+            for pnr in reservations:
+                if pnr['reservation_id']==r and pnr["train_id"]==t:
+                    del pnr
+                    print('Your ticket has been cancelled')
+                    break
+                else:
+                    print('Reservation id invalid')
         else:
-            print('Reservation id invalid')
+            break
 
 def user_dashboard(st):
     print("Welcome to the User Dashboard")
