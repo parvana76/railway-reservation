@@ -198,7 +198,8 @@ def book_train(x):
                         T={'passenger_name':name,'date':date,'age':age,'sex':sex,"zone":zone,'class':Class,'reservation_id':res_id,'Seat_Number':seatno,"phone no.":pno,"email id":e_id,"train_id":id_}
                         inter.append(T)
 
-                tot=Total+100-dis
+                tot=Total+(Total*(dis/100))
+                tot= Total+100
                 print('Total price: ','Rs.',tot)
                 s=str(input('Proceed with payment? (Y/N)'))
                 if s==('Y' or 'y' or 'Yes' or 'YES' or 'yes'):
