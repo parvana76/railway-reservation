@@ -80,7 +80,7 @@ def admin_dashboard(st,edi):#main function
         print("4. Edit seat/class prices") 
         print("5. Exit")
         
-        choice = input("Enter your choice (1-5): ")
+        choice = input("Enter your choice (1-4): ")
         if choice == "1":
             view_trains()
         elif choice == "2":
@@ -127,7 +127,7 @@ def book_train(x):
     flag=1
     for train in trains:
         if origin in train["stations"] and destination in train["stations"]:
-            print(flag,"Train id:",train["train_id"],"\tName:",train["name"],'\tTimings:',train["timings"],"\tDays of run:",train["days"])
+            print(flag,"Train id:",train["train_id"],"\tName:",train["name"],'\tTimings:',train["timings"],"\tDays od run:",train["days"])
 
             flag=flag+1
     if flag==1:
@@ -142,7 +142,7 @@ def book_train(x):
                 train_id=train["train_id"]
                 print(train["days"])
                 day=input("Enter the day you want to travel:")
-                date=input("enter the date you want to travel(in a list)")
+                date=eval(input("enter the date you want to travel(in a list)"))
                 passengers=int(input('Enter no. of passengers:'))
                 if passengers<=train["seats"]:
                     global name
@@ -168,7 +168,7 @@ def book_train(x):
                       "\nCC\tChair Car\tPrice: Rs.",classes['CC'],
                       "\nSL\tSleeper\tPrice: Rs.",classes['SL'],
                       "\n2S\tSecond Seating\tPrice: Rs.",classes['2S'],"\n")
-    Class=input("Enter preferred class(1A,EC,2A,FC,3A,CC,SL,2S):")
+                        Class=input("Enter preferred class(1A,EC,2A,FC,3A,CC,SL,2S):")
                     
                         for c in classes.keys():
                             if c==Class:
@@ -198,8 +198,7 @@ def book_train(x):
                         T={'passenger_name':name,'date':date,'age':age,'sex':sex,"zone":zone,'class':Class,'reservation_id':res_id,'Seat_Number':seatno,"phone no.":pno,"email id":e_id,"train_id":id_}
                         inter.append(T)
 
-                tot=Total+(Total*(dis/100))
-                tot= Total+100
+                tot=Total+100-dis
                 print('Total price: ','Rs.',tot)
                 s=str(input('Proceed with payment? (Y/N)'))
                 if s==('Y' or 'y' or 'Yes' or 'YES' or 'yes'):
@@ -227,23 +226,27 @@ def pnr_check():
 def cancel():
     t=int(input("Enter train id"))
     r=int(input("Enter reservation id"))
-    date=input("enter todays date(in a list):")
+    date=eval(input("enter todays date(in a list):"))
     for pnr in reservations:
         if pnr['reservation_id']==r and pnr["train_id"]==t:
-            if pnr['date']==date:
+            x=pnr['date']
+            y=x[0]
+            z=x[1]
+            print(x)
+            if x==date:
                 print("Cancellation not possible")
                 break
-            elif (pnr['date'][0]-date[0])<=2:
+            elif (y-date[0])<=2:
                 print("Cancellation not possible")
                 break
-            elif date[0]>pnr['date'][0]:
+            elif date[0]>y:
                 print("Cancellation not possible")
                 break
-            elif date[1]>pnr['date'][1]:
+            elif date[1]>z:
                 print("Cancellation not possible")
                 break
             else:
-                del reservations[pnr]
+                reservations.remove(pnr)
                 print('Your ticket has been cancelled')
                 break
     else:
