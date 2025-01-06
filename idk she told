@@ -126,7 +126,6 @@ def book_train(x):
         print(i)
     origin=input('Enter origin:')
     destination=input('Enter Destination:')
-    print(train["days"])
     day=input("Enter the day you want to travel:")
     date=input("enter the date you want to travel(in the form of (YYYY-MM-DD)")
     
